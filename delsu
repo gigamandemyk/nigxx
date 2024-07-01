@@ -73,6 +73,8 @@ end
 
 UserInputService.InputBegan:Connect(OnKeyPress)
 
+local UserInputService = game:GetService("UserInputService")
+
 UserInputService.InputBegan:Connect(function(keygo, ok)
     if (not ok) then
         if (keygo.KeyCode == getgenv().headtapper101.Aimbot.Keybind) then
