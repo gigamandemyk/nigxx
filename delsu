@@ -42,31 +42,6 @@ local Players = game:GetService("Players")
 local Client = Players.LocalPlayer
 local Plr = nil -- Initialize Plr here
 
-local function OnKeyPress(Input, GameProcessedEvent)
-    if Input.KeyCode == getgenv().headtapper101.Aimbot.Keybind and not GameProcessedEvent then 
-        Toggle = not Toggle
-    elseif Input.KeyCode == getgenv().headtapper101.Macro.SpeedGlitchKey then
-        if getgenv().headtapper101.Macro.Enabled then 
-            getgenv().headtapper101.Macro.SpeedGlitch = not getgenv().headtapper101.Macro.SpeedGlitch
-            if getgenv().headtapper101.Macro.SpeedGlitch then
-                repeat
-                    game:GetService("RunService").Heartbeat:Wait()
-                    keypress(0x49)
-                    game:GetService("RunService").Heartbeat:Wait()
-                    keypress(0x4F)
-                    game:GetService("RunService").Heartbeat:Wait()
-                    keyrelease(0x49)
-                    game:GetService("RunService").Heartbeat:Wait()
-                    keyrelease(0x4F)
-                    game:GetService("RunService").Heartbeat:Wait()
-                until not getgenv().headtapper101.Macro.SpeedGlitch
-            end
-        end
-    end
-end
-
-UserInputService.InputBegan:Connect(OnKeyPress)
-
 local UserInputService = game:GetService("UserInputService")
 
 UserInputService.InputBegan:Connect(function(keygo, ok)
