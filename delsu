@@ -42,37 +42,6 @@ local Players = game:GetService("Players")
 local Client = Players.LocalPlayer
 local Plr = nil -- Initialize Plr here
 
--- 360 on bind
-local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
-local Camera = workspace.CurrentCamera
-local Toggle = false -- Initialize Toggle to false
-
-local function OnKeyPress(Input, GameProcessedEvent)
-    if Input.KeyCode == getgenv().headtapper101.Aimbot.Keybind and not GameProcessedEvent then 
-        Toggle = not Toggle
-    elseif Input.KeyCode == getgenv().headtapper101.Macro.SpeedGlitchKey then
-        if getgenv().headtapper101.Macro.Enabled then 
-            getgenv().headtapper101.Macro.SpeedGlitch = not getgenv().headtapper101.Macro.SpeedGlitch
-            if getgenv().headtapper101.Macro.SpeedGlitch then
-                repeat
-                    game:GetService("RunService").Heartbeat:Wait()
-                    keypress(0x49)
-                    game:GetService("RunService").Heartbeat:Wait()
-                    keypress(0x4F)
-                    game:GetService("RunService").Heartbeat:Wait()
-                    keyrelease(0x49)
-                    game:GetService("RunService").Heartbeat:Wait()
-                    keyrelease(0x4F)
-                    game:GetService("RunService").Heartbeat:Wait()
-                until not getgenv().headtapper101.Macro.SpeedGlitch
-            end
-        end
-    end
-end
-
-UserInputService.InputBegan:Connect(OnKeyPress)
-
 local UserInputService = game:GetService("UserInputService")
 
 UserInputService.InputBegan:Connect(function(keygo, ok)
@@ -153,7 +122,7 @@ game:GetService("RunService").Heartbeat:Connect(function(deltaTime)
     end
 end)
 
-local mainevent = game:GetService("ReplicatedStorage")
+local mainevent = game:GetService("ReplicatedStorage").MainEvent
 
 Client.Character.ChildAdded:Connect(function(child)
     if child:IsA("Tool") and child:FindFirstChild("MaxAmmo") then
@@ -231,6 +200,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
         end)
     end
 end)
+
 
 if getgenv().headtapper101.EspSection.ChamsESP == true then
 
@@ -383,7 +353,7 @@ if getgenv().headtapper101.Spin.Enabled == true then
     end
     
     RunService.RenderStepped:Connect(RotateCamera)
-    end
+end
 
 getgenv().Loaded = true -- end of the script
 end
