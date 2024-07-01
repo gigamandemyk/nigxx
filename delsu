@@ -20,7 +20,7 @@ local function getnamecall()
         return "UpdateMousePosI"
     elseif game.PlaceId == 5602055394 or game.PlaceId == 7951883376 then
         return "MousePos"
-    elseif game.PlaceId == 17344804827 or game.PlaceId == 17897702920 or game.PlaceId == 15897875156 or game.PlaceId == 18129399112 then
+    elseif game.PlaceId == 17344804827 or game.PlaceId == 17897702920 then
         return "UpdateMousePos"
     elseif game.PlaceId == 9825515356 then
         return "GetMousePos"
@@ -41,6 +41,31 @@ local Locking = false
 local Players = game:GetService("Players")
 local Client = Players.LocalPlayer
 local Plr = nil -- Initialize Plr here
+
+local function OnKeyPress(Input, GameProcessedEvent)
+    if Input.KeyCode == getgenv().headtapper101.Aimbot.Keybind and not GameProcessedEvent then 
+        Toggle = not Toggle
+    elseif Input.KeyCode == getgenv().headtapper101.Macro.SpeedGlitchKey then
+        if getgenv().headtapper101.Macro.Enabled then 
+            getgenv().headtapper101.Macro.SpeedGlitch = not getgenv().headtapper101.Macro.SpeedGlitch
+            if getgenv().headtapper101.Macro.SpeedGlitch then
+                repeat
+                    game:GetService("RunService").Heartbeat:Wait()
+                    keypress(0x49)
+                    game:GetService("RunService").Heartbeat:Wait()
+                    keypress(0x4F)
+                    game:GetService("RunService").Heartbeat:Wait()
+                    keyrelease(0x49)
+                    game:GetService("RunService").Heartbeat:Wait()
+                    keyrelease(0x4F)
+                    game:GetService("RunService").Heartbeat:Wait()
+                until not getgenv().headtapper101.Macro.SpeedGlitch
+            end
+        end
+    end
+end
+
+UserInputService.InputBegan:Connect(OnKeyPress)
 
 local UserInputService = game:GetService("UserInputService")
 
@@ -161,7 +186,7 @@ game:GetService("RunService").RenderStepped:Connect(function()
         local Position = Plr.Character.Humanoid:GetState() == Enum.HumanoidStateType.Freefall and Plr.Character[getgenv().headtapper101.Aimbot.TargetPart].Position + Vector3.new(0, getgenv().headtapper101.Aimbot.JumpOffset, 0) or Plr.Character[getgenv().headtapper101.Aimbot.TargetPart].Position
         if not CheckAnti(Plr) then
             local Main = CFrame.new(workspace.CurrentCamera.CFrame.p, Position + ((Plr.Character.HumanoidRootPart.Velocity) * getgenv().headtapper101.Aimbot.CamlockPrediction) + GetShakedVector3(getgenv().headtapper101.Aimbot.CameraShake))
-            workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(Main, getgenv().headtapper101.Aimbot.CameraSmoothing, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut)
+            workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(Main, getgenv().headtapper101.Aimbot.CameraSmoothing, Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut)
         else
             local Main = CFrame.new(workspace.CurrentCamera.CFrame.p, Position + ((Plr.Character.Humanoid.MoveDirection * Plr.Character.Humanoid.WalkSpeed) * getgenv().headtapper101.Aimbot.CamlockPrediction) + GetShakedVector3(getgenv().headtapper101.Aimbot.CameraShake))
             workspace.CurrentCamera.CFrame = workspace.CurrentCamera.CFrame:Lerp(Main, getgenv().headtapper101.Aimbot.CameraSmoothing, Enum.EasingStyle.Elastic, Enum.EasingDirection.InOut)
@@ -200,7 +225,6 @@ game:GetService("RunService").RenderStepped:Connect(function()
         end)
     end
 end)
-
 
 if getgenv().headtapper101.EspSection.ChamsESP == true then
 
