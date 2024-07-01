@@ -20,7 +20,7 @@ local function getnamecall()
         return "UpdateMousePosI"
     elseif game.PlaceId == 5602055394 or game.PlaceId == 7951883376 then
         return "MousePos"
-    elseif game.PlaceId == 17344804827 or game.PlaceId == 17897702920 then
+    elseif game.PlaceId == 17344804827 or game.PlaceId == 17897702920 or game.PlaceId == 15897875156 or game.PlaceId == 18129399112 then
         return "UpdateMousePos"
     elseif game.PlaceId == 9825515356 then
         return "GetMousePos"
@@ -41,6 +41,37 @@ local Locking = false
 local Players = game:GetService("Players")
 local Client = Players.LocalPlayer
 local Plr = nil -- Initialize Plr here
+
+-- 360 on bind
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+local Toggle = false -- Initialize Toggle to false
+
+local function OnKeyPress(Input, GameProcessedEvent)
+    if Input.KeyCode == getgenv().headtapper101.Aimbot.Keybind and not GameProcessedEvent then 
+        Toggle = not Toggle
+    elseif Input.KeyCode == getgenv().headtapper101.Macro.SpeedGlitchKey then
+        if getgenv().headtapper101.Macro.Enabled then 
+            getgenv().headtapper101.Macro.SpeedGlitch = not getgenv().headtapper101.Macro.SpeedGlitch
+            if getgenv().headtapper101.Macro.SpeedGlitch then
+                repeat
+                    game:GetService("RunService").Heartbeat:Wait()
+                    keypress(0x49)
+                    game:GetService("RunService").Heartbeat:Wait()
+                    keypress(0x4F)
+                    game:GetService("RunService").Heartbeat:Wait()
+                    keyrelease(0x49)
+                    game:GetService("RunService").Heartbeat:Wait()
+                    keyrelease(0x4F)
+                    game:GetService("RunService").Heartbeat:Wait()
+                until not getgenv().headtapper101.Macro.SpeedGlitch
+            end
+        end
+    end
+end
+
+UserInputService.InputBegan:Connect(OnKeyPress)
 
 local UserInputService = game:GetService("UserInputService")
 
